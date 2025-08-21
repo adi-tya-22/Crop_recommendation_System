@@ -1,1 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Recommendation System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8fafc; font-family: Arial, sans-serif; }
+        .container { margin-top: 40px; }
+        .card { border-radius: 12px; box-shadow: 0px 4px 10px rgba(0,0,0,0.1); }
+        h1 { font-weight: bold; color: #166534; }
+        .form-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        @media (max-width: 992px) { .form-grid { grid-template-columns: repeat(2,1fr); } }
+        @media (max-width: 576px) { .form-grid { grid-template-columns: 1fr; } }
+        .btn-custom { background-color: #166534; color: white; padding: 10px 20px; font-size: 18px; border-radius: 8px; border: none; transition: 0.3s; }
+        .btn-custom:hover { background-color: #0b3d1d; }
+        .result { margin-top: 20px; font-size: 20px; font-weight: bold; color: #0b3d1d; }
+        .crop-image {
+    margin-top: 15px;
+    width: 300px;          /* fixed width */
+    height: 200px;         /* fixed height */
+    object-fit: cover;     /* crop/fill image without stretching */
+    border-radius: 12px;
+    box-shadow: 0px 3px 8px rgba(0,0,0,0.1);
+}
 
+    </style>
+</head>
+<body>
+    <div class="container text-center">
+        <h1 class="mb-4">Crop Recommendation System</h1>
+        <div class="card p-4">
+            <form action="/predict" method="post">
+                <div class="form-grid">
+                    <div><label>Nitrogen</label><input type="number" name="nitrogen" class="form-control" placeholder="Enter Nitrogen" required></div>
+                    <div><label>Phosphorus</label><input type="number" name="phosphorus" class="form-control" placeholder="Enter Phosphorus" required></div>
+                    <div><label>Potassium</label><input type="number" name="potassium" class="form-control" placeholder="Enter Potassium" required></div>
+                    <div><label>Temperature (°C)</label><input type="number" name="temperature" class="form-control" step="0.1" placeholder="Enter Temperature" required></div>
+                    <div><label>Humidity (%)</label><input type="number" name="humidity" class="form-control" step="0.1" placeholder="Enter Humidity" required></div>
+                    <div><label>Soil pH</label><input type="number" name="ph" class="form-control" step="0.1" placeholder="Enter Soil pH" required></div>
+                    <div><label>Rainfall (mm)</label><input type="number" name="rainfall" class="form-control" step="0.1" placeholder="Enter Rainfall" required></div>
+                </div>
+                <div class="mt-4"><button type="submit" class="btn-custom">Get Recommendation</button></div>
+            </form>
+
+           {% if result %}
+    <div class="result">{{ result }}</div>
+    {% if crop_name %}
+        <div class="mt-3">
+            <img src="{{ url_for('static', filename='images/' + crop_name|lower + '.png') }}"
+                 alt="Crop Image" class="crop-image">
+        </div>
+    {% endif %}
+{% endif %}
+
+        </div>
+    </div>
+</body>
+</html>
