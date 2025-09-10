@@ -27,5 +27,3 @@ The dataset contains the following features:
 The target variable is the **recommended crop**.
 
 -----
-git clone https://github.com/your-username/crop-recommendation.git
-cd crop-recommendation
